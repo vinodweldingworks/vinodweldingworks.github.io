@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>vww</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0C0F1C;
+      /* deep dark background for high contrast & premium iron feel */
+      color: #F0F3FA;
+      line-height: 1.4;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1E243B;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 10px;
+    }
+
+    /* header / hero */
+    .hero {
+      background: linear-gradient(135deg, #0B0E17 0%, #151E2C 100%);
+      padding: 2rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FFF8E7, #D4AF37);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #B9C7D9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.15);
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #E7C35C;
+    }
+
+    /* container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* gallery grid */
+    .gates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* card design – premium, elevated, high visibility */
+    .gate-card {
+      background: #131826;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .gate-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 36px -12px rgba(0, 0, 0, 0.6);
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    /* image wrapper */
+    .card-img {
+      width: 100%;
+      height: 220px;
+      background: #0A0E16;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .gate-card:hover .card-img img {
+      transform: scale(1.03);
+    }
+
+    /* content area */
+    .card-content {
+      padding: 1.3rem 1.2rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .gate-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.5rem;
+      color: #F5E7C8;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .gate-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #D4AF37;
+      background: rgba(212, 175, 55, 0.12);
+      padding: 0.2rem 0.6rem;
+      border-radius: 40px;
+      line-height: 1;
+      letter-spacing: -0.3px;
+    }
+    .dimensions {
+      display: flex;
+      gap: 1rem;
+      margin: 0.8rem 0 0.6rem;
+      background: #0F1420;
+      padding: 0.5rem 0.7rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .dimensions span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #CBD5E6;
+    }
+    .dimensions i {
+      color: #D4AF37;
+      width: 1.2rem;
+      font-size: 0.9rem;
+    }
+    .color-info {
+      background: #0A0F1A;
+      border-radius: 1rem;
+      padding: 0.6rem 0.8rem;
+      margin: 0.6rem 0 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      border-left: 3px solid #D4AF37;
+    }
+    .color-info i {
+      font-size: 1.1rem;
+      color: #D4AF37;
+    }
+    .color-info span {
+      font-weight: 500;
+      color: #F0F3FA;
+    }
+    .btn-detail {
+      background: transparent;
+      border: 1px solid #D4AF37;
+      color: #D4AF37;
+      padding: 0.6rem 0;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: default;
+      transition: 0.2s;
+      text-align: center;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+    .btn-detail i {
+      font-size: 0.75rem;
+      transition: 0.2s;
+    }
+    .gate-card:hover .btn-detail {
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    /* footer */
+    .footer {
+      background: #080B12;
+      text-align: center;
+      padding: 1.8rem;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      font-size: 0.85rem;
+      color: #8E9AAF;
+    }
+    .footer a {
+      color: #D4AF37;
+      text-decoration: none;
+    }
+
+    /* responsive touches */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      .gates-grid {
+        gap: 1.2rem;
+      }
+      .card-img {
+        height: 190px;
+      }
+      .gate-price {
+        font-size: 1.2rem;
+      }
+      .gate-title {
+        font-size: 1.1rem;
+      }
+      .dimensions {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero p {
+        font-size: 0.95rem;
+      }
+      .card-content {
+        padding: 1rem;
+      }
+      .color-info {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* loading subtle */
+    .loading-message {
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: #D4AF37;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1><i class="fas fa-helmet-battle" style="margin-right: 8px;"></i> Vinod Welding Works</h1>
+  <p>Mastercrafted wrought iron main gates — security meets timeless elegance.<br> Explore our exclusive collection of 20 premium designs.</p>
+  <div class="badge"><i class="fas fa-ruler-combined"></i> Custom dimensions | 100% hand-forged</div>
+</div>
+
+<div class="container">
+  <div class="gates-grid" id="gatesGrid">
+    <!-- dynamic cards injected via JS -->
+    <div class="loading-message"><i class="fas fa-spinner fa-pulse"></i> Loading premium gate designs...</div>
+  </div>
+</div>
+
+<div class="footer">
+  <i class="fas fa-crown"></i> Vinod Welding Works — Forged with integrity | <i class="fas fa-mobile-alt"></i> Mobile optimized gallery <br>
+  © 2025 | Each design customizable: size, colour & finish. Actual images can be replaced.
+</div>
+
+<script>
+  // ---------- GENERATE 20 GATE DESIGNS WITH PRICE, DIMENSIONS, COLOR DESCRIPTION ----------
+  // Each object contains: name, priceUSD, lengthFt (height), widthFt, colorDesc, imagePlaceholder
+  // Using high-quality placeholder images with gate style text – user can replace 'imageUrl' with real gate images.
+  
+  const colorPalette = [
+    "Matte Black Powder Coat", "Aged Bronze Finish", "Hammered Dark Green", "Antique Copper Rust", 
+    "Satin Graphite Grey", "Burnished Silver", "Rustic Iron Oxide", "Midnight Blue Metallic", 
+    "Weathered Steel", "Gold Vein Accent", "Oil-Rubbed Bronze", "Charcoal Textured", 
+    "Deep Burgundy", "Slate Grey Matte", "Bronze Patina", "Black Hammered Texture", 
+    "Dark Pewter", "Raw Iron Clear Coat", "Smoked Oakwood", "Gunmetal Shimmer"
+  ];
+  
+  // descriptive gate names
+  const gateNames = [
+    "Regal Arch", "Fortress Classic", "Modern Horizon", "Heritage Scroll", "Imperial Guard",
+    "Vienna Ornament", "Titanium Blade", "Riviera Wrought", "Monarch Panel", "Stealth Edge",
+    "Royal Oak", "Palazzo Deluxe", "Cortez Iron", "Zenith Linear", "Baroque Majesty",
+    "Vanguard Shield", "Atlas Heavy", "Luna Curve", "Thor Hammered", "Apex Minimalist"
+  ];
+  
+  // generate realistic dimensions: length (ft) from 5.0 to 9.5, width (ft) from 3.5 to 7.0
+  // Prices range $540 - $2450 based on complexity and size
+  const generateGatesData = () => {
+    const gates = [];
+    for (let i = 0; i < 20; i++) {
+      // length (height) in feet: variation elegant
+      let lengthVal = (5 + (i % 7) + (i * 0.23) % 3.5).toFixed(1);
+      if (parseFloat(lengthVal) < 5.0) lengthVal = (5.2).toFixed(1);
+      if (parseFloat(lengthVal) > 9.8) lengthVal = (9.2).toFixed(1);
+      
+      let widthVal = (3.2 + (i % 5) + (i * 0.17) % 2.8).toFixed(1);
+      if (parseFloat(widthVal) < 3.2) widthVal = (3.4).toFixed(1);
+      if (parseFloat(widthVal) > 6.9) widthVal = (6.5).toFixed(1);
+      
+      // price dynamic: based on dimensions + design index, between $540 and $2450
+      let basePrice = 540 + (i * 38) + (parseFloat(lengthVal) * 28) + (parseFloat(widthVal) * 42);
+      let price = Math.round(basePrice / 10) * 10;
+      if (price < 540) price = 540;
+      if (price > 2480) price = 2450;
+      
+      // choose colour from extended list, cycling ensures variety
+      const colorDesc = colorPalette[i % colorPalette.length];
+      
+      // image placeholder: professional gate-themed visual with clear label & gate icon.
+      // each placeholder shows "Gate Design #XX" and a subtle iron icon – client will replace src with actual gate photos.
+      // To keep consistent and high visibility, we use placehold.co with gate-related text & emblem.
+      // I also add a small lock/shield icon representation in text, but actual design stands out.
+      const gateNumber = (i + 1).toString().padStart(2, '0');
+      // Using elegant placeholder images that show a gate illustration preview. 
+      // Background color: warm dark iron, gold text. 
+      // For better aesthetics, different background hues based on index (bronze/dark steel)
+      const bgColors = ["2A2418", "26242E", "2F2A1F", "2C2A36", "2A2418"];
+      const bgColor = bgColors[i % bgColors.length];
+      const textColor = "E7C35C";
+      const imageUrl = `https://placehold.co/600x450/${bgColor}/${textColor}?text=⚜️+GATE+${gateNumber}+⚜️%0AIron+Masterwork`;
+      // alternative: for demo but each image is unique and clearly shows gate design ID.
+      // The client can replace imageUrl array with their own 20 gate images easily.
+      
+      gates.push({
+        id: i + 1,
+        name: gateNames[i],
+        price: price,
+        lengthFt: parseFloat(lengthVal),
+        widthFt: parseFloat(widthVal),
+        color: colorDesc,
+        imgSrc: imageUrl,
+        displayId: gateNumber
+      });
+    }
+    return gates;
+  };
+  
+  // render gate cards
+  function renderGateCards(gatesData) {
+    const gridContainer = document.getElementById('gatesGrid');
+    if (!gridContainer) return;
+    
+    // clear loading or existing
+    gridContainer.innerHTML = '';
+    
+    gatesData.forEach(gate => {
+      const card = document.createElement('div');
+      card.className = 'gate-card';
+      
+      // image container
+      const imgDiv = document.createElement('div');
+      imgDiv.className = 'card-img';
+      const img = document.createElement('img');
+      img.src = gate.imgSrc;
+      img.alt = `Iron Main Gate Design ${gate.displayId} - ${gate.name}`;
+      img.loading = 'lazy';
+      // error fallback: if placeholder fails (rare), show gate text fallback
+      img.onerror = function() {
+        this.src = `https://placehold.co/600x450/2E2A36/DDAA44?text=GATE+${gate.displayId}+DESIGN`;
+      };
+      imgDiv.appendChild(img);
+      
+      // content area
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'card-content';
+      
+      // title row + price
+      const titleRow = document.createElement('div');
+      titleRow.className = 'gate-title';
+      titleRow.innerHTML = `<span><i class="fas fa-shield-alt" style="color: #D4AF37; font-size: 0.9rem; margin-right: 6px;"></i>${gate.name}</span>
+                            <span class="gate-price">$${gate.price.toLocaleString()}</span>`;
+      
+      // dimensions (length & width in feet)
+      const dimensionsDiv = document.createElement('div');
+      dimensionsDiv.className = 'dimensions';
+      dimensionsDiv.innerHTML = `
+        <span><i class="fas fa-arrows-alt-v"></i> Length: ${gate.lengthFt} ft</span>
+        <span><i class="fas fa-arrows-alt-h"></i> Width: ${gate.widthFt} ft</span>
+      `;
+      
+      // colour description block
+      const colorBlock = document.createElement('div');
+      colorBlock.className = 'color-info';
+      colorBlock.innerHTML = `
+        <i class="fas fa-palette"></i>
+        <span>Finish: ${gate.color}</span>
+      `;
+      
+      // static button (informational, no action needed)
+      const btn = document.createElement('div');
+      btn.className = 'btn-detail';
+      btn.innerHTML = `<i class="fas fa-arrow-right"></i> Request quote & specs <i class="fas fa-hard-hat"></i>`;
+      
+      contentDiv.appendChild(titleRow);
+      contentDiv.appendChild(dimensionsDiv);
+      contentDiv.appendChild(colorBlock);
+      contentDiv.appendChild(btn);
+      
+      card.appendChild(imgDiv);
+      card.appendChild(contentDiv);
+      gridContainer.appendChild(card);
+    });
+  }
+  
+  // generate 20 gates data and render
+  const allGates = generateGatesData();
+  renderGateCards(allGates);
+  
+  // optional: add console note that images are easily replaceable (for developer)
+  console.log("✅ IronGate Gallery Ready — 20 main gate designs loaded. Replace 'imgSrc' in generateGatesData with your actual gate images.");
+</script>
+
+<!-- 
+  DESIGN NOTES:
+  - Fully responsive: Grid adapts from 1 to 4 columns based on screen width.
+  - High visibility: Dark background + gold accents + crisp white/gray text. WCAG contrast friendly.
+  - Each card includes: Gate image (placeholder can be swapped with actual 20 gate photos), price, length (ft), width (ft), colour description.
+  - Mobile friendly: touch-friendly cards, readable fonts, flexible spacing.
+  - For production: replace imageUrl inside generateGatesData() with real image paths (local or CDN).
+  - Colour description & dimensions are realistic and varied across 20 designs.
+  - No external dependencies except Font Awesome and Google Fonts (lightweight).
+-->
+</body>
+</html>
