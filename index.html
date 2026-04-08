@@ -197,7 +197,112 @@
     .gate-card:hover .btn-detail {
       background: rgba(212, 175, 55, 0.08);
     }
-
+   /* ---------- FULL IMAGE POPUP MODAL ---------- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      background: #131826;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      animation: scaleIn 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .modal-img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      display: block;
+      background: #0A0E16;
+    }
+    .modal-info {
+      padding: 1.2rem 1.8rem;
+      background: #0F1420;
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .modal-info h3 {
+      font-size: 1.6rem;
+      color: #F5E7C8;
+      margin-bottom: 0.5rem;
+    }
+    .modal-info .modal-price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #D4AF37;
+      margin: 0.4rem 0;
+    }
+    .modal-info .modal-dims {
+      display: flex;
+      gap: 1.2rem;
+      margin: 0.6rem 0;
+      font-size: 0.95rem;
+      color: #CBD5E6;
+    }
+    .modal-info .modal-color {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #0A0F1A;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      width: fit-content;
+      margin-top: 0.5rem;
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #D4AF37;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      background: rgba(0,0,0,0.5);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .close-modal:hover {
+      color: #FFF;
+      background: rgba(212, 175, 55, 0.7);
+      transform: scale(1.05);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 640px) {
+      .modal-info h3 { font-size: 1.2rem; }
+      .modal-info .modal-price { font-size: 1.1rem; }
+      .close-modal { top: 12px; right: 20px; width: 40px; height: 40px; font-size: 1.8rem; }
+      .modal-info { padding: 1rem; }
+    }
     /* Footer with contact & social */
     .footer {
       background: #080B12;
@@ -318,6 +423,19 @@
   </div>
 </footer>
 
+  <!-- Modal Lightbox -->
+<div id="imageModal" class="modal">
+  <span class="close-modal">&times;</span>
+  <div class="modal-content">
+    <img id="modalImage" class="modal-img" alt="Gate large view">
+    <div class="modal-info">
+      <h3 id="modalTitle"></h3>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-dims" id="modalDims"></div>
+      <div class="modal-color" id="modalColor"></div>
+    </div>
+  </div>
+</div>
 <script>
   // ==================== REPLACE WITH YOUR 20 GATE IMAGE URLs ====================
   const gateImages = [  `gate1.png`,
@@ -390,6 +508,7 @@
     return gates;
   }
 
+  // Render cards and attach click event for modal
   function renderGateCards(gatesData) {
     const grid = document.getElementById('gatesGrid');
     if (!grid) return;
@@ -397,6 +516,7 @@
     gatesData.forEach(gate => {
       const card = document.createElement('div');
       card.className = 'gate-card';
+      card.setAttribute('data-gate-id', gate.id);
       
       const imgDiv = document.createElement('div');
       imgDiv.className = 'card-img';
@@ -414,7 +534,7 @@
       content.innerHTML = `
         <div class="gate-title">
           <span><i class="fas fa-shield-alt" style="color: #D4AF37;"></i> ${gate.name}</span>
-          <span class="gate-price">₹${gate.price.toLocaleString()}</span>
+          <span class="gate-price">$${gate.price.toLocaleString()}</span>
         </div>
         <div class="dimensions">
           <span><i class="fas fa-arrows-alt-v"></i> Length: ${gate.lengthFt} ft</span>
@@ -430,10 +550,58 @@
       `;
       card.appendChild(imgDiv);
       card.appendChild(content);
+      
+      // Attach click event to open modal with gate details
+      card.addEventListener('click', (e) => {
+        // Prevent opening if clicking on button? but button is non-interactive, so fine.
+        openModal(gate);
+      });
+      
       grid.appendChild(card);
     });
   }
 
+  // Modal functionality
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDims = document.getElementById('modalDims');
+  const modalColor = document.getElementById('modalColor');
+  const closeBtn = document.querySelector('.close-modal');
+
+  function openModal(gate) {
+    modalImg.src = gate.imgSrc;
+    modalImg.alt = gate.name;
+    modalTitle.textContent = gate.name;
+    modalPrice.textContent = `$${gate.price.toLocaleString()}`;
+    modalDims.innerHTML = `<span><i class="fas fa-arrows-alt-v"></i> Length: ${gate.lengthFt} ft</span>
+                           <span><i class="fas fa-arrows-alt-h"></i> Width: ${gate.widthFt} ft</span>`;
+    modalColor.innerHTML = `<i class="fas fa-palette"></i> Finish: ${gate.color}`;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Event listeners for modal close
+  closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  // Also close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  // Generate and render
   const allGates = generateGatesData();
   renderGateCards(allGates);
 </script>
