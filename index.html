@@ -496,8 +496,8 @@
       
       let basePrice = 540 + (i * 38) + (parseFloat(lengthVal) * 58) + (parseFloat(widthVal) * 60);
       let price = Math.round(basePrice / 10) * 10;
-      if (price < 540) price = 540;
-      if (price > 2480) price = 2450;
+      if (price < 2500) price = 2500;
+      if (price > 8540) price = 8540;
       
       const gateNumber = (i + 1).toString().padStart(2, '0');
       gates.push({
