@@ -218,6 +218,27 @@
     .gate-card:hover .btn-detail {
       background: rgba(212, 175, 55, 0.08);
     }
+    
+   .view-all-btn {
+  background: transparent;
+  border: 2px solid #D4AF37;
+  color: #D4AF37;
+  padding: 0.75rem 2rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.view-all-btn:hover {
+  background: #D4AF37;
+  color: #0C0F1C;
+  transform: translateY(-2px);
+}
+    
    /* ---------- FULL IMAGE POPUP MODAL ---------- */
     .modal {
       display: none;
@@ -412,6 +433,9 @@
 
 <div class="container">
   <div class="gates-grid" id="gatesGrid">
+    <div class="view-all-container" style="text-align: center; margin-top: 2rem;">
+  <button id="viewAllBtn" class="view-all-btn">View All Designs <i class="fas fa-arrow-right"></i></button>
+</div>
     <div class="loading-message"><i class="fas fa-spinner fa-pulse"></i> Loading premium gate designs...</div>
   </div>
 </div>
